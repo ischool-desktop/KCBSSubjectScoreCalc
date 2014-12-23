@@ -46,7 +46,7 @@
             this.btnPrint.AutoSize = true;
             this.btnPrint.BackColor = System.Drawing.Color.Transparent;
             this.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnPrint.Location = new System.Drawing.Point(230, 149);
+            this.btnPrint.Location = new System.Drawing.Point(238, 120);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 25);
             this.btnPrint.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -60,7 +60,7 @@
             this.btnExit.AutoSize = true;
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnExit.Location = new System.Drawing.Point(311, 149);
+            this.btnExit.Location = new System.Drawing.Point(319, 120);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 25);
             this.btnExit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -77,7 +77,7 @@
             this.intSchoolYear.BackgroundStyle.Class = "DateTimeInputBackground";
             this.intSchoolYear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.intSchoolYear.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.intSchoolYear.Location = new System.Drawing.Point(112, 94);
+            this.intSchoolYear.Location = new System.Drawing.Point(128, 54);
             this.intSchoolYear.MaxValue = 999;
             this.intSchoolYear.MinValue = 90;
             this.intSchoolYear.Name = "intSchoolYear";
@@ -95,7 +95,7 @@
             this.intSemester.BackgroundStyle.Class = "DateTimeInputBackground";
             this.intSemester.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.intSemester.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.intSemester.Location = new System.Drawing.Point(262, 94);
+            this.intSemester.Location = new System.Drawing.Point(278, 54);
             this.intSemester.MaxValue = 2;
             this.intSemester.MinValue = 1;
             this.intSemester.Name = "intSemester";
@@ -113,7 +113,7 @@
             // 
             this.labelX1.BackgroundStyle.Class = "";
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(57, 96);
+            this.labelX1.Location = new System.Drawing.Point(73, 56);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(47, 21);
             this.labelX1.TabIndex = 4;
@@ -128,7 +128,7 @@
             // 
             this.labelX2.BackgroundStyle.Class = "";
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(218, 96);
+            this.labelX2.Location = new System.Drawing.Point(234, 56);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(34, 21);
             this.labelX2.TabIndex = 5;
@@ -143,11 +143,11 @@
             // 
             this.labelX3.BackgroundStyle.Class = "";
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(17, 49);
+            this.labelX3.Location = new System.Drawing.Point(17, 106);
             this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(341, 21);
+            this.labelX3.Size = new System.Drawing.Size(180, 39);
             this.labelX3.TabIndex = 6;
-            this.labelX3.Text = "(本報表可以產生出[原始成績]與[原原始成績]的對照報表)";
+            this.labelX3.Text = "(本報表可以產生出[原始成績]\r\n與[原原始成績]的資訊報表)";
             // 
             // labelX4
             // 
@@ -168,7 +168,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 182);
+            this.ClientSize = new System.Drawing.Size(420, 154);
             this.Controls.Add(this.labelX4);
             this.Controls.Add(this.labelX3);
             this.Controls.Add(this.labelX2);

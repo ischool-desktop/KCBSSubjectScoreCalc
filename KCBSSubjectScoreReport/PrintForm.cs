@@ -52,7 +52,7 @@ namespace KCBSSubjectScoreReport
                 StudentIDList = K12.Presentation.NLDPanels.Student.SelectedSource;
                 _SchoolYear = intSchoolYear.Value.ToString();
                 _Semester = intSemester.Value.ToString();
-
+                btnPrint.Enabled = false;
                 BGW.RunWorkerAsync();
             }
             else
@@ -81,19 +81,29 @@ namespace KCBSSubjectScoreReport
 
         void BGW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            btnPrint.Enabled = true;
             if (e.Cancelled)
+            {
                 MsgBox.Show("報表列印已中止!");
+                return;
+            }
 
 
             if (e.Error != null)
+            {
                 MsgBox.Show("列印發生錯誤:\n" + e.Error.Message);
+                return;
+            }
 
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "*.xlsx|*.xlsx";
-
+            dialog.FileName = "成績調整資訊報表";
             if (dialog.ShowDialog() != DialogResult.OK)
+            {
                 MsgBox.Show("已取消儲存!");
+                return;
+            }
 
             Workbook book = new Workbook();
             book.Worksheets.Clear();
@@ -126,7 +136,15 @@ namespace KCBSSubjectScoreReport
                 }
             }
 
-            book.Save(dialog.FileName);
+            try
+            {
+                book.Save(dialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                MsgBox.Show("儲存發生錯誤:\n" + ex.Message);
+                return;
+            }
 
             Process.Start(dialog.FileName);
         }
