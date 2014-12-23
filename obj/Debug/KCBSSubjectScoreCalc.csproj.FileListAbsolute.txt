@@ -1,7 +1,0 @@
-D:\GitHub2\KCBSSubjectScoreCalc\bin\Debug\KCBSSubjectScoreCalc.dll
-D:\GitHub2\KCBSSubjectScoreCalc\bin\Debug\KCBSSubjectScoreCalc.pdb
-D:\GitHub2\KCBSSubjectScoreCalc\obj\Debug\KCBSSubjectScoreCalc.csprojResolveAssemblyReference.cache
-D:\GitHub2\KCBSSubjectScoreCalc\obj\Debug\KCBSSubjectScoreCalc.dll
-D:\GitHub2\KCBSSubjectScoreCalc\obj\Debug\KCBSSubjectScoreCalc.pdb
-D:\GitHub2\KCBSSubjectScoreCalc\obj\Debug\KCBSSubjectScoreCalc.KCBSCalcSetting.resources
-D:\GitHub2\KCBSSubjectScoreCalc\obj\Debug\KCBSSubjectScoreCalc.csproj.GenerateResource.Cache
