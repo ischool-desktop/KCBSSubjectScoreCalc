@@ -12,22 +12,30 @@ KCBSSubjectScoreReport
 ====================
 
 透過FISCA提供的動態串連寫法
+
+
 來達到掛載此模組時,才提供成績調整功能
 
 =====註冊=====
 
 dynamic obj = new ExpandoObject();
+
 obj.GetRange = new Func<string, List<string>>(DoSomething);
+
 InteractionService.RegisterAPI("CaredSummary", obj);
 
 =====使用=====
 
 dynamic summary = InteractionService.DiscoverAPI("CaredSummary");
+
 List<string> studs = summary.GetRange("yaoming") as List<string>;
 
 =====處理行為=====
 
 private static List<string> DoSomething(string args)
+
 {
+
 return null;
+
 }
