@@ -29,7 +29,7 @@ namespace KCBSSubjectScoreCalc
         public decimal Score { get; set; }
 
         [FISCA.UDT.Field(Field = "percentage")]
-        public decimal Percentage { get; set; }
+        public int Percentage { get; set; }
 
         [FISCA.UDT.Field(Field = "user")]
         public string User { get; set; }

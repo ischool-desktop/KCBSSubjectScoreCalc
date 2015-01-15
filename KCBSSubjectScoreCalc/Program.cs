@@ -27,10 +27,12 @@ namespace KCBSSubjectScoreCalc
         public class Instance : ISubjectCalcPostProcess
         {
             FISCA.UDT.AccessHelper _A;
+            Dictionary<string, int> _subjDic;
 
             public Instance()
             {
                 _A = new FISCA.UDT.AccessHelper();
+                _subjDic = new Dictionary<string, int>();
             }
 
             public void ShowConfigForm()
@@ -38,20 +40,13 @@ namespace KCBSSubjectScoreCalc
                 if (!Permission.康橋學期科目成績調整計算權限)
                     return;
 
-                new KCBSCalcSetting().ShowDialog();
+                new KCBSCalcSetting(_subjDic).ShowDialog();
             }
 
             public void PostProcess(int schoolYear, int semester, List<StudentRecord> list)
             {
                 if (!Permission.康橋學期科目成績調整計算權限)
                     return;
-
-                Dictionary<string, KCBSSubjectScoreConfig> subjDic = new Dictionary<string, KCBSSubjectScoreConfig>();
-
-                foreach (KCBSSubjectScoreConfig subj in _A.Select<KCBSSubjectScoreConfig>())
-                {
-                    subjDic.Add(subj.Subject + "#" + subj.Level, subj);
-                }
 
                 string user = FISCA.Authentication.DSAServices.UserAccount;
 
@@ -69,16 +64,16 @@ namespace KCBSSubjectScoreCalc
                     XmlElement xml = stu.Fields["SemesterSubjectCalcScore"] as XmlElement;
                     foreach (XmlElement elem in xml.SelectNodes("//Subject"))
                     {
-                        string subj_name = elem.GetAttribute("科目");
-                        string level = elem.GetAttribute("科目級別");
-                        string score = elem.GetAttribute("原始成績");
+                        string subj_name = elem.GetAttribute("科目").Trim();
+                        string level = elem.GetAttribute("科目級別").Trim();
+                        string score = elem.GetAttribute("原始成績").Trim();
                         decimal percentage = 0m;
 
                         string key = subj_name + "#" + level;
 
-                        if (subjDic.ContainsKey(key))
+                        if (_subjDic.ContainsKey(key))
                         {
-                            percentage = subjDic[key].Percentage / 100m;
+                            percentage = _subjDic[key] / 100m;
 
                             decimal new_score;
 
@@ -86,7 +81,7 @@ namespace KCBSSubjectScoreCalc
 
                             new_score = new_score + (new_score * percentage);
 
-                            new_score = Math.Round(new_score, 2, MidpointRounding.AwayFromZero);
+                            new_score = Math.Round(new_score, 0, MidpointRounding.AwayFromZero);
                             double db_score = (double)new_score;
                             new_score = (decimal)db_score;
 
@@ -103,7 +98,7 @@ namespace KCBSSubjectScoreCalc
                             int l;
                             int.TryParse(level, out l);
                             log.SubjectLevel = l;
-                            log.Percentage = percentage;
+                            log.Percentage = _subjDic[key];
                             log.User = user;
 
                             insert.Add(log);
@@ -116,11 +111,8 @@ namespace KCBSSubjectScoreCalc
 
                 if (insert.Count > 0)
                     _A.InsertValues(insert);
-
+                 
             }
-
-
-
         }
     }
 }

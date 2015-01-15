@@ -88,7 +88,6 @@
     <Compile Include="KCBSCalcSetting.Designer.cs">
       <DependentUpon>KCBSCalcSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="KCBSSubjectScoreConfig.cs" />
     <Compile Include="KCBSSubjectScoreLog.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Program.cs" />

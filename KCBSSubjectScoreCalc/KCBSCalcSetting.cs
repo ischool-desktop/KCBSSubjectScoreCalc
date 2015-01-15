@@ -16,43 +16,63 @@ namespace KCBSSubjectScoreCalc
     public partial class KCBSCalcSetting : BaseForm
     {
         AccessHelper _A;
-        List<KCBSSubjectScoreConfig> _config;
-        public KCBSCalcSetting()
+        Dictionary<string, int> _refDic;
+
+        public KCBSCalcSetting(Dictionary<string, int> dic)
         {
             InitializeComponent();
-
+            _refDic = dic;
             _A = new AccessHelper();
+            SetSubjectItems();
+        }
 
-            _config = _A.Select<KCBSSubjectScoreConfig>();
-
-            foreach (KCBSSubjectScoreConfig conf in _config)
-            {
-                DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dgv, conf.Subject + "", conf.Level + "", conf.Percentage + "");
-                dgv.Rows.Add(row);
-            }
-
-            string sql = "select subject from course group by subject order by subject";
+        private void SetSubjectItems()
+        {
+            List<string> students = K12.Presentation.NLDPanels.Student.SelectedSource;
+            string id = string.Join(",", students);
+            string sql = "select subject from course where id in (select ref_course_id from sc_attend where ref_student_id=" + id + ") group by subject order by subject";
 
             QueryHelper q = new QueryHelper();
             DataTable dt = q.Select(sql);
+            List<string> check = new List<string>();
 
             foreach (DataRow row in dt.Rows)
             {
-                string subj = row["subject"] + "";
-                colSubject.Items.Add(subj);
+                //去除空白
+                string subj = (row["subject"] + "").Trim();
+                if (!check.Contains(subj))
+                {
+                    check.Add(subj);
+                }
             }
+
+            colSubject.Items.AddRange(check.ToArray());
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            if (DataValidated())
+            {
+                BuildData();
+                this.Close();
+            }
+        }
+
+        /// <summary>
+        /// 驗證資料
+        /// </summary>
+        /// <returns></returns>
+        private bool DataValidated()
         {
             bool pass = true;
             List<string> check = new List<string>();
+
+            //檢查資料
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (row.IsNewRow)
@@ -95,40 +115,32 @@ namespace KCBSSubjectScoreCalc
                 }
             }
 
-            if (!pass)
-                return;
+            return pass;
+        }
 
+        /// <summary>
+        /// 整理資料
+        /// </summary>
+        private void BuildData()
+        {
+            //先清除字典內容
+            _refDic.Clear();
 
-            if (_config.Count > 0)
-                _A.DeletedValues(_config);
-
-            List<KCBSSubjectScoreConfig> insert = new List<KCBSSubjectScoreConfig>();
-
+            //將資料整理到字典中
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (row.IsNewRow)
                     continue;
 
-                KCBSSubjectScoreConfig conf = new KCBSSubjectScoreConfig();
-                conf.Subject = row.Cells[colSubject.Index].Value + "";
+                string subj = (row.Cells[colSubject.Index].Value + "").Trim();
+                string level = (row.Cells[colLevel.Index].Value + "").Trim();
+                string percentage = (row.Cells[colPercentage.Index].Value + "").Trim();
 
-                int level;
-                int percentage;
-                int.TryParse(row.Cells[colLevel.Index].Value + "", out level);
-                int.TryParse(row.Cells[colPercentage.Index].Value + "", out percentage);
-                conf.Level = level;
-                conf.Percentage = percentage;
+                string key = subj + "#" + level;
 
-                insert.Add(conf);
+                if (!_refDic.ContainsKey(key))
+                    _refDic.Add(key, int.Parse(percentage));
             }
-
-            if (insert.Count > 0)
-            {
-                _A.InsertValues(insert);
-            }
-
-            this.Close();
-
         }
     }
 }

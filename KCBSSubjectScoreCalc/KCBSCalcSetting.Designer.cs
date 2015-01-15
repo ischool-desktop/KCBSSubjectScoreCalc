@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.colSubject = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.colLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnSave = new DevComponents.DotNetBar.ButtonX();
-            this.btnClose = new DevComponents.DotNetBar.ButtonX();
+            this.btnConfirm = new DevComponents.DotNetBar.ButtonX();
+            this.btnCancel = new DevComponents.DotNetBar.ButtonX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,16 +48,16 @@
             this.colSubject,
             this.colLevel,
             this.colPercentage});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dgv.Location = new System.Drawing.Point(13, 13);
+            this.dgv.Location = new System.Drawing.Point(12, 68);
             this.dgv.Name = "dgv";
             this.dgv.RowTemplate.Height = 24;
             this.dgv.Size = new System.Drawing.Size(447, 249);
@@ -85,39 +87,70 @@
             this.colPercentage.HeaderText = "調整比例";
             this.colPercentage.Name = "colPercentage";
             // 
-            // btnSave
+            // btnConfirm
             // 
-            this.btnSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnSave.BackColor = System.Drawing.Color.Transparent;
-            this.btnSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSave.Location = new System.Drawing.Point(304, 269);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "儲存";
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnConfirm.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnConfirm.BackColor = System.Drawing.Color.Transparent;
+            this.btnConfirm.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnConfirm.Location = new System.Drawing.Point(301, 332);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(75, 23);
+            this.btnConfirm.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnConfirm.TabIndex = 1;
+            this.btnConfirm.Text = "確認";
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
-            // btnClose
+            // btnCancel
             // 
-            this.btnClose.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnClose.Location = new System.Drawing.Point(385, 269);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "離開";
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnCancel.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnCancel.Location = new System.Drawing.Point(384, 332);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "取消";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(12, 12);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(447, 23);
+            this.labelX1.TabIndex = 3;
+            this.labelX1.Text = "【提醒】指定科目的成績將四捨五入進位至整數";
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.labelX2.Location = new System.Drawing.Point(12, 39);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(447, 23);
+            this.labelX2.TabIndex = 4;
+            this.labelX2.Text = "請手動處理加分後的成績可能造成『及格』或『取得學分』的情形";
             // 
             // KCBSCalcSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 294);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnSave);
+            this.ClientSize = new System.Drawing.Size(472, 362);
+            this.Controls.Add(this.labelX2);
+            this.Controls.Add(this.labelX1);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.dgv);
             this.DoubleBuffered = true;
             this.Name = "KCBSCalcSetting";
@@ -133,7 +166,9 @@
         private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn colSubject;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLevel;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPercentage;
-        private DevComponents.DotNetBar.ButtonX btnSave;
-        private DevComponents.DotNetBar.ButtonX btnClose;
+        private DevComponents.DotNetBar.ButtonX btnConfirm;
+        private DevComponents.DotNetBar.ButtonX btnCancel;
+        private DevComponents.DotNetBar.LabelX labelX1;
+        private DevComponents.DotNetBar.LabelX labelX2;
     }
 }
