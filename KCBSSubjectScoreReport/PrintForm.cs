@@ -112,27 +112,33 @@ namespace KCBSSubjectScoreReport
 
             SetSheetColume(sheet);
 
+            List<string> StudentIDList = kcbsDic.Keys.ToList();
+            StudentIDList.Sort(SortStudent);
+
             int rowIndex = 1;
             //每一個學生
-            foreach (string studentid in kcbsDic.Keys)
+            foreach (string studentid in StudentIDList)
             {
-
                 //每一筆資料
                 foreach (SubjectObj sub in kcbsDic[studentid])
                 {
-                    sheet.Cells[rowIndex, ColumnIndexDic["班級"]].Value = sub.student.Class != null ? sub.student.Class.Name : "";
-                    sheet.Cells[rowIndex, ColumnIndexDic["座號"]].Value = sub.student.SeatNo.HasValue ? sub.student.SeatNo.Value.ToString() : "";
-                    sheet.Cells[rowIndex, ColumnIndexDic["學號"]].Value = sub.student.StudentNumber;
-                    sheet.Cells[rowIndex, ColumnIndexDic["姓名"]].Value = sub.student.Name;
-                    sheet.Cells[rowIndex, ColumnIndexDic["學年度"]].Value = sub.kcbs_sore.school_year;
-                    sheet.Cells[rowIndex, ColumnIndexDic["學期"]].Value = sub.kcbs_sore.semester;
-                    sheet.Cells[rowIndex, ColumnIndexDic["科目名稱"]].Value = sub.kcbs_sore.subject;
-                    sheet.Cells[rowIndex, ColumnIndexDic["科目級別"]].Value = sub.kcbs_sore.subject_level;
-                    sheet.Cells[rowIndex, ColumnIndexDic["原始成績"]].Value = sub.SubjectScore.Score.HasValue ? sub.SubjectScore.Score.Value.ToString() : "";
-                    sheet.Cells[rowIndex, ColumnIndexDic["原原始成績"]].Value = sub.kcbs_sore.originalscore;
-                    sheet.Cells[rowIndex, ColumnIndexDic["調整比例"]].Value = sub.kcbs_sore.percentage.ToString();
-                    sheet.Cells[rowIndex, ColumnIndexDic["使用者"]].Value = sub.kcbs_sore.user;
-                    rowIndex++;
+                    if (sub.student != null)
+                    {
+                        sheet.Cells[rowIndex, ColumnIndexDic["班級"]].Value = sub.student.Class != null ? sub.student.Class.Name : "";
+                        sheet.Cells[rowIndex, ColumnIndexDic["座號"]].Value = sub.student.SeatNo.HasValue ? sub.student.SeatNo.Value.ToString() : "";
+                        sheet.Cells[rowIndex, ColumnIndexDic["學號"]].Value = sub.student.StudentNumber;
+                        sheet.Cells[rowIndex, ColumnIndexDic["姓名"]].Value = sub.student.Name;
+                        sheet.Cells[rowIndex, ColumnIndexDic["學年度"]].Value = sub.kcbs_sore.school_year;
+                        sheet.Cells[rowIndex, ColumnIndexDic["學期"]].Value = sub.kcbs_sore.semester;
+                        sheet.Cells[rowIndex, ColumnIndexDic["科目名稱"]].Value = sub.kcbs_sore.subject;
+                        sheet.Cells[rowIndex, ColumnIndexDic["科目級別"]].Value = sub.kcbs_sore.subject_level;
+                        sheet.Cells[rowIndex, ColumnIndexDic["原始成績"]].Value = sub.SubjectScore.Score.HasValue ? sub.SubjectScore.Score.Value.ToString() : "";
+                        sheet.Cells[rowIndex, ColumnIndexDic["原原始成績"]].Value = sub.kcbs_sore.originalscore;
+
+                        sheet.Cells[rowIndex, ColumnIndexDic["調整比例"]].Value = GetPercent(sub.kcbs_sore.percentage);
+                        sheet.Cells[rowIndex, ColumnIndexDic["使用者"]].Value = sub.kcbs_sore.user;
+                        rowIndex++;
+                    }
                 }
             }
 
@@ -147,6 +153,32 @@ namespace KCBSSubjectScoreReport
             }
 
             Process.Start(dialog.FileName);
+
+        }
+
+        private int SortStudent(string kjr1, string kjr2)
+        {
+            SHStudentRecord s1 = StudentDic[kjr1];
+            SHStudentRecord s2 = StudentDic[kjr2];
+
+            string StudentSort1 = s1.Class != null ? (s1.Class.GradeYear.HasValue ? s1.Class.GradeYear.Value.ToString().PadLeft(2, '0') : "00") : "00";
+            string StudentSort2 = s2.Class != null ? (s2.Class.GradeYear.HasValue ? s2.Class.GradeYear.Value.ToString().PadLeft(2, '0') : "00") : "00";
+
+            StudentSort1 += s1.Class != null ? s1.Class.Name.PadLeft(10, '0') : "0000000000";
+            StudentSort2 += s2.Class != null ? s2.Class.Name.PadLeft(10, '0') : "0000000000";
+
+            StudentSort1 += s1.SeatNo.HasValue ? s1.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
+            StudentSort2 += s2.SeatNo.HasValue ? s2.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
+
+            return StudentSort1.CompareTo(StudentSort2);
+        }
+
+        /// <summary>
+        /// 取得與轉換%值
+        /// </summary>
+        private string GetPercent(decimal percentage)
+        {
+            return percentage + "%";
         }
 
         /// <summary>
