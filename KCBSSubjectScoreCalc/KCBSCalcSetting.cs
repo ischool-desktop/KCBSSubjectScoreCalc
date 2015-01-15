@@ -30,7 +30,11 @@ namespace KCBSSubjectScoreCalc
         {
             List<string> students = K12.Presentation.NLDPanels.Student.SelectedSource;
             string id = string.Join(",", students);
-            string sql = "select subject from course where id in (select ref_course_id from sc_attend where ref_student_id=" + id + ") group by subject order by subject";
+            //string sql = "select subject from course where id in (select ref_course_id from sc_attend where ref_student_id in (" + id + ")) group by subject order by subject";
+
+            string sql = "select subject from course ";
+            sql += "where id in (select ref_course_id from sc_attend where ref_student_id in (" + id + ") group by ref_course_id) ";
+            sql += "group by subject order by subject";
 
             QueryHelper q = new QueryHelper();
             DataTable dt = q.Select(sql);
