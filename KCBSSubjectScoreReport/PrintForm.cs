@@ -79,6 +79,43 @@ namespace KCBSSubjectScoreReport
 
         }
 
+        private void Marges(List<SubjectObj> list1, List<SHSemesterScoreRecord> list2)
+        {
+            foreach (SubjectObj each in list1)
+            {
+                foreach (SHSemesterScoreRecord semesterScore in list2)
+                {
+                    foreach (SHSubjectScore subject in semesterScore.Subjects.Values)
+                    {
+                        if (CheckSubject(each, subject))
+                        {
+                            each.SubjectScore = subject;
+                            each.student = semesterScore.Student;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否為相同科目
+        /// </summary>
+        private bool CheckSubject(SubjectObj each, SHSubjectScore subjectscore)
+        {
+            if (each.kcbs_sore.subject == subjectscore.Subject.Trim())
+            {
+                if (subjectscore.Level.HasValue)
+                {
+                    if (each.kcbs_sore.subject_level == subjectscore.Level.Value.ToString())
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         void BGW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnPrint.Enabled = true;
@@ -222,24 +259,6 @@ namespace KCBSSubjectScoreReport
             return ColumnsName;
         }
 
-        private void Marges(List<SubjectObj> list1, List<SHSemesterScoreRecord> list2)
-        {
-            foreach (SubjectObj each in list1)
-            {
-                foreach (SHSemesterScoreRecord semesterScore in list2)
-                {
-                    foreach (SHSubjectScore subject in semesterScore.Subjects.Values)
-                    {
-                        if (CheckSubject(each, subject))
-                        {
-                            each.SubjectScore = subject;
-                            each.student = semesterScore.Student;
-                        }
-                    }
-                }
-            }
-        }
-
         private Dictionary<string, List<SHSemesterScoreRecord>> GetSemesterScore(List<string> StudentIDList)
         {
             Dictionary<string, List<SHSemesterScoreRecord>> dic = new Dictionary<string, List<SHSemesterScoreRecord>>();
@@ -256,25 +275,6 @@ namespace KCBSSubjectScoreReport
             }
 
             return dic;
-        }
-
-        /// <summary>
-        /// 是否為相同科目
-        /// </summary>
-        private bool CheckSubject(SubjectObj each, SHSubjectScore subjectscore)
-        {
-            if (each.kcbs_sore.subject == subjectscore.Subject)
-            {
-                if (subjectscore.Level.HasValue)
-                {
-                    if (each.kcbs_sore.subject_level == subjectscore.Level.Value.ToString())
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using FISCA;
 using FISCA.Permission;
+using FISCA.Presentation;
 using K12.Presentation;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,19 @@ namespace KCBSSubjectScoreReport
         [MainMethod()]
         static public void Main()
         {
-
-            NLDPanels.Student.RibbonBarItems["資料統計"]["報表"]["康橋客製報表"]["成績調整資訊報表"].Click += delegate
+            MenuButton mb = NLDPanels.Student.RibbonBarItems["資料統計"]["報表"]["康橋客製報表"];
+            mb["成績調整資訊報表"].Enable = false;
+            mb["成績調整資訊報表"].Click += delegate
             {
                 PrintForm p = new PrintForm();
                 p.ShowDialog();
+            };
+
+            NLDPanels.Student.SelectedSourceChanged += delegate
+            {
+                bool selectCount = NLDPanels.Student.SelectedSource.Count > 0;
+                mb["成績調整資訊報表"].Enable = selectCount && Permissions.成績調整資訊報表權限;
+
             };
 
             Catalog detail1 = RoleAclSource.Instance["學生"]["報表"];
